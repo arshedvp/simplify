@@ -7,9 +7,9 @@ import { redirect } from 'next/navigation';
 export default async function Home() {
   const session = await getServerSession(authOptions);
 
-  if (!session) {
-    redirect('/signin');
-  }
+  // if (!session) {
+  //   redirect('/signin');
+  // }
 
   // This is where you'd fetch the user's data from your backend
   const userData = {
