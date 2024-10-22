@@ -18,7 +18,7 @@ const RecentActivity = ({ date, amount }) => (
   </div>
 );
 
-export default function Dashboard({ userData }) {
+export function Dashboard({ userData }) {
   return (
     <div className="bg-gradient-to-br from-pink-200 to-blue-200 min-h-screen p-6">
       <div className="max-w-md mx-auto">
