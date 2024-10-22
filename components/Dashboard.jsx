@@ -62,12 +62,12 @@ export function Dashboard({ userData }) {
           <button className="p-2">
             <Home className="text-blue-500" />
           </button>
-          <button className="p-2">
+          <a href='/call' className="p-2">
             <Phone className="text-gray-800" />
-          </button>
-          <button className="p-2">
+          </a>
+          <a href='/chat' className="p-2">
             <MessageCircle className="text-gray-800" />
-          </button>
+          </a>
           <button className="p-2">
             <User className="text-gray-800" />
           </button>
