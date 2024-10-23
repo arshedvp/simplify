@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react';
 import { Phone, Clapperboard,WalletCards, ChevronRight, Home, User, Settings , Search} from 'lucide-react';
 
@@ -36,7 +37,7 @@ const CallEntry = ({ name, number, time, type }) => {
   );
 };
 
-export function CallPage() {
+export default function CallPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const calls = [
     { name: 'John Marius', number: '0123456789', time: '10:30 AM', type: 'incoming' },
@@ -113,10 +114,10 @@ export function CallPage() {
         {/* Navigation Bar */}
         <nav className="flex justify-around bg-white rounded-full py-2 shadow-lg">
           <a href='/dashboard' className="p-2">
-            <Home className="text-blue-500" />
+            <Home className="text-gray-800" />
           </a>
           <button className="p-2"> 
-            <Phone className="text-gray-800" />
+            <Phone className="text-blue-500" />
           </button>
           <a href='/shows' className="p-2">
             <Clapperboard className="text-gray-800" />

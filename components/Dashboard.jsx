@@ -1,5 +1,6 @@
-import React from 'react';
-import { Phone, MessageCircle, Clock, ChevronRight, Home, User, Settings } from 'lucide-react';
+import React, { useState } from 'react';
+import { Phone, Clapperboard,WalletCards, ChevronRight, Home, User, Settings } from 'lucide-react';
+import { CallPage } from './CallPage';
 
 const DashboardCard = ({ title, value, unit }) => (
   <div className="bg-white rounded-xl p-4 shadow-sm">
@@ -19,6 +20,8 @@ const RecentActivity = ({ date, amount }) => (
 );
 
 export function Dashboard({ userData }) {
+  const [showCallPage, setShowCallPage] = useState(false);  // Track whether to show the CallPage
+
   return (
     <div className="bg-gradient-to-br from-pink-200 to-blue-200 min-h-screen p-6">
       <div className="max-w-md mx-auto">
@@ -31,12 +34,12 @@ export function Dashboard({ userData }) {
         </header>
 
         <div className="bg-white rounded-xl p-4 mb-6 shadow-sm">
-          <h3 className="text-lg font-semibold mb-2 text-gray-700">Premium</h3>
+          <h3 className="text-lg font-semibold mb-2 text-gray-700">{userData.premiumAmount}</h3>
           <div className="flex justify-between items-center">
-            <span className="text-2xl font-bold text-gray-700">${userData.premiumAmount}</span>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm">
+            <span className="text-2xl font-bold text-gray-700">${userData.minutes}</span>
+            <a href='/renew' className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm">
               Renew
-            </button>
+            </a>
           </div>
         </div>
 
@@ -45,35 +48,45 @@ export function Dashboard({ userData }) {
           <DashboardCard title="Minutes" value={userData.minutes} unit="min" />
         </div>
 
+        {/* Conditionally render Recent Bills or Call Page */}
         <div className="bg-white rounded-xl p-4 mb-6 shadow-sm">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-700">Recent Bills</h3>
-            <ChevronRight className="text-gray-800" />
-          </div>
-          {userData.recentBills.map((bill, index) => (
-            <RecentActivity key={index} date={bill.date} amount={bill.amount} />
-          ))}
-          <button className="w-full text-blue-500 text-sm font-semibold mt-2">
-            View Full Speed
-          </button>
+          {showCallPage ? (
+            <>
+              <h3 className="text-lg font-semibold mb-2 text-gray-700">Call History</h3>
+              <CallPage /> {/* Render CallPage component */}
+            </>
+          ) : (
+            <>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold text-gray-700">Recent Bills</h3>
+                <ChevronRight className="text-gray-800" />
+              </div>
+              {userData.recentBills.map((bill, index) => (
+                <RecentActivity key={index} date={bill.date} amount={bill.amount} />
+              ))}
+            
+            </>
+          )}
         </div>
 
+        {/* Navigation Bar */}
         <nav className="flex justify-around bg-white rounded-full py-2 shadow-lg">
-          <button className="p-2">
+          <a href='/dashboard' className="p-2">
             <Home className="text-blue-500" />
-          </button>
-          <a href='/call' className="p-2">
+          </a>
+          <a href='/call' className="p-2" onClick={() => setShowCallPage(false)}> {/* Handle Phone click */}
             <Phone className="text-gray-800" />
           </a>
-          <a href='/chat' className="p-2">
-            <MessageCircle className="text-gray-800" />
+          <a href='/shows' className="p-2">
+            <Clapperboard className="text-gray-800" />
           </a>
-          <button className="p-2">
+          <a href='/profile' className="p-2" onClick={() => setShowCallPage(false)}>
             <User className="text-gray-800" />
-          </button>
-          <button className="p-2">
-            <Settings className="text-gray-800" />
-          </button>
+          </a>
+
+          <a href='/wallet' className="p-2"  onClick={() => setShowCallPage(false)}>
+            <WalletCards className="text-gray-800" />
+          </a>
         </nav>
       </div>
     </div>
