@@ -18,7 +18,7 @@ const RecentActivity = ({ date, amount }) => (
   </div>
 );
 
-export default function Dashboard({ userData }) {
+export function Dashboard({ userData }) {
   return (
     <div className="bg-gradient-to-br from-pink-200 to-blue-200 min-h-screen p-6">
       <div className="max-w-md mx-auto">
@@ -62,12 +62,12 @@ export default function Dashboard({ userData }) {
           <button className="p-2">
             <Home className="text-blue-500" />
           </button>
-          <button className="p-2">
+          <a href='/call' className="p-2">
             <Phone className="text-gray-800" />
-          </button>
-          <button className="p-2">
+          </a>
+          <a href='/chat' className="p-2">
             <MessageCircle className="text-gray-800" />
-          </button>
+          </a>
           <button className="p-2">
             <User className="text-gray-800" />
           </button>
