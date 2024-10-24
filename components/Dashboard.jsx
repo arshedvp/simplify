@@ -1,6 +1,7 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Phone, Clapperboard, WalletCards, ChevronRight, Home, User, Settings, Activity } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { CallPage } from './CallPage';
 import Link from 'next/link';
 
@@ -32,6 +33,25 @@ const RecentActivity = ({ date, amount }) => (
 export function Dashboard({ userData }) {
   const [showCallPage, setShowCallPage] = useState(false);
   const [activeTab, setActiveTab] = useState('home');
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!userData) {
+      router.replace('/signin');
+    }
+  }, [userData, router]);
+
+  // Early return with loading state if no userData
+  if (!userData) {
+    return (
+      <div className="bg-gradient-to-br from-blue-50 to-purple-50 min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">Redirecting to sign in...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gradient-to-br from-blue-50 to-purple-50 min-h-screen pb-20">
@@ -44,7 +64,7 @@ export function Dashboard({ userData }) {
           </div>
           <div className="relative">
             <img 
-              src="/api/placeholder/40/40"
+              src="./images.png"
               alt="Profile"
               className="w-12 h-12 rounded-full border-2 border-white shadow-md"
             />
