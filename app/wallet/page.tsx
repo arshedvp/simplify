@@ -16,7 +16,8 @@ export default function Wallet() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (!token) {
+    console.log(token)
+    if (token == null) {
       router.push('/signin');
     } else {
       const fetchWalletData = async () => {

@@ -40,7 +40,7 @@ export function CallPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const calls = [
     { name: 'John Marius', number: '0123456789', time: '10:30 AM', type: 'incoming' },
-    { name: 'Sarah Wilson', number: '9876543210', time: 'Yesterday', type: 'missed' },
+    { name: 'Wilson', number: '9876543210', time: 'Yesterday', type: 'missed' },
     { name: 'David Lee', number: '4567890123', time: 'Yesterday', type: 'outgoing' },
     { name: 'Emma Thompson', number: '3334445555', time: '2 days ago', type: 'incoming' },
   ];
