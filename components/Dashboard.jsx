@@ -55,7 +55,7 @@ export function Dashboard({ userData }) {
         {/* Premium Card */}
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-6 mb-6 shadow-lg text-white">
           <div className="flex justify-between items-start mb-4">
-            <h3 className="text-lg font-semibold opacity-90">Premium Plan</h3>
+            <h3 className="text-lg font-semibold opacity-90">{userData.plan_name}</h3>
             <span className="px-3 py-1 bg-white/20 rounded-full text-xs font-medium">
               Active
             </span>

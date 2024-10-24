@@ -41,7 +41,8 @@ export default function Home() {
           const userData = {
             name: data.name,
             phoneNumber: data.phone,
-            premiumAmount: data.current_plan,
+            plan_name : data.current_plan,
+            premiumAmount: data.balance,
             callDataUsage: data.dataUsage,
             minutes: data.balance,
             recentBills: [

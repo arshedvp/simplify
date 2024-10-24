@@ -49,7 +49,7 @@ const Hero = () => {
           
           <div className="flex flex-col sm:flex-row justify-center gap-4 items-center">
             <Link 
-              href="/dashboard" 
+              href="/signin" 
               className="w-full sm:w-auto bg-blue-600 text-white px-8 py-4 rounded-xl font-semibold flex items-center justify-center gap-2 hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               Get Started Now
