@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Phone, ArrowRight, Lock, CheckCircle, AlertCircle } from 'lucide-react';
 
 export default function SignIn() {
   const [phone, setPhone] = useState('');
@@ -81,78 +82,112 @@ export default function SignIn() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        {/* Header and Phone Number Input */}
-        <div className="text-center mb-8">
-          <div className="bg-teal-100 inline-block p-4 rounded-full mb-4">
-            <svg className="text-teal-500 h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+    <div className="bg-gradient-to-br from-blue-50 to-purple-50 min-h-screen flex flex-col items-center justify-center p-4">
+      <div className="max-w-md w-full">
+        {/* Header */}
+        <header className="flex justify-between items-center mb-8">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-800">Sign In</h2>
+            <p className="text-sm font-medium text-gray-500">Enter your details to continue</p>
           </div>
-          <p className="text-gray-600">You'll receive a 4-digit code to verify next.</p>
-        </div>
-
-        {/* Phone Number Input */}
-        <div className="mb-6">
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">Enter your mobile number</label>
-          <div className="flex">
-            <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-              +91
-            </span>
-            <input
-              type="tel"
-              id="phone"
-              className="flex-1 block w-full text-black rounded-none rounded-r-md sm:text-sm border-gray-300"
-              placeholder="1234567890"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
+          <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+            <Phone className="w-6 h-6 text-blue-600" />
           </div>
-        </div>
+        </header>
 
-        <button
-          className="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded mb-6"
-          onClick={handleContinueClick}
-          disabled={loading}
-        >
-          {loading ? 'Generating OTP...' : 'CONTINUE'}
-        </button>
-
-        {/* OTP Input */}
-        {showOtpField && (
+        {/* Main Card */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
+          {/* Phone Input */}
           <div className="mb-6">
-            <label htmlFor="otp" className="block text-sm font-medium text-gray-700 mb-2">Enter OTP</label>
-            <input
-              type="text"
-              id="otp"
-              className="block w-full text-black rounded-md sm:text-sm border-gray-300"
-              placeholder="Enter 6-digit OTP"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-            />
+            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+              Mobile Number
+            </label>
+            <div className="flex items-center space-x-3 bg-gray-50 rounded-xl px-4 py-3">
+              <Phone className="text-gray-400 w-5 h-5" />
+              <input
+                type="tel"
+                id="phone"
+                className="bg-transparent border-none outline-none flex-1 text-gray-700 placeholder-gray-400"
+                placeholder="Enter your mobile number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
           </div>
-        )}
 
-        {/* Submit Button */}
-        {showOtpField && (
+          {/* Continue Button */}
           <button
-            className="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded"
-            onClick={handleSubmit}
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-xl flex items-center justify-center space-x-2 transition-colors"
+            onClick={handleContinueClick}
             disabled={loading}
           >
-            {loading ? 'Validating OTP...' : 'SUBMIT'}
+            {loading ? (
+              'Sending OTP...'
+            ) : (
+              <>
+                <span>Continue</span>
+                <ArrowRight className="w-4 h-4" />
+              </>
+            )}
           </button>
-        )}
 
-        {/* Display Message */}
+          {/* OTP Section */}
+          {showOtpField && (
+            <div className="mt-6 pt-6 border-t border-gray-100">
+              <div className="mb-6">
+                <label htmlFor="otp" className="block text-sm font-medium text-gray-700 mb-2">
+                  Enter OTP
+                </label>
+                <div className="flex items-center space-x-3 bg-gray-50 rounded-xl px-4 py-3">
+                  <Lock className="text-gray-400 w-5 h-5" />
+                  <input
+                    type="text"
+                    id="otp"
+                    className="bg-transparent border-none outline-none flex-1 text-gray-700 placeholder-gray-400"
+                    placeholder="Enter 6-digit OTP"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <button
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-xl flex items-center justify-center space-x-2 transition-colors"
+                onClick={handleSubmit}
+                disabled={loading}
+              >
+                {loading ? (
+                  'Verifying...'
+                ) : (
+                  <>
+                    <span>Verify OTP</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Message Display */}
         {message && (
           <div
-            className={`mt-4 p-3 rounded ${
-              messageType === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+            className={`rounded-xl p-4 flex items-center space-x-3 ${
+              messageType === 'success' ? 'bg-green-100' : 'bg-red-100'
             }`}
           >
-            {message}
+            {messageType === 'success' ? (
+              <CheckCircle className="w-5 h-5 text-green-600" />
+            ) : (
+              <AlertCircle className="w-5 h-5 text-red-600" />
+            )}
+            <span
+              className={`text-sm font-medium ${
+                messageType === 'success' ? 'text-green-600' : 'text-red-600'
+              }`}
+            >
+              {message}
+            </span>
           </div>
         )}
       </div>
