@@ -6,49 +6,55 @@ export default function SignIn() {
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
   const [showOtpField, setShowOtpField] = useState(false);
+  const [loading, setLoading] = useState(false); // State for loading spinner
+  const [message, setMessage] = useState(''); // State for success or error message
+  const [messageType, setMessageType] = useState(''); // Type of message (success or error)
+  const router = useRouter();
 
   const handleContinueClick = async () => {
+    setLoading(true); // Start loading
+    setMessage(''); // Clear any previous message
     try {
-      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || ''; // Access environment variable
-
-      // Send request to get OTP
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || '';
+      
+      // Simulate API request
       const response = await fetch(`${backendUrl}/getOTP`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          phone,
-        }),
+        body: JSON.stringify({ phone }),
       });
 
       if (!response.ok) {
         throw new Error('Failed to request OTP');
       }
 
-      const result = await response.json();
-      console.log('OTP sent:', result); // Handle success response
-
-      setShowOtpField(true); // Show OTP input field
+      setMessage('OTP sent successfully!'); // Success message
+      setMessageType('success');
+      setShowOtpField(true);
     } catch (error) {
-      console.error('Error:', error); // Handle error response
+      setMessage('Failed to send OTP. Please try again.'); // Error message
+      setMessageType('error');
+      console.error('Error:', error);
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
   const handleSubmit = async () => {
+    setLoading(true); // Start loading
+    setMessage(''); // Clear any previous message
     try {
-      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || ''; // Access environment variable
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || '';
 
-      // Submit phone number and OTP
+      // Simulate API request
       const response = await fetch(`${backendUrl}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          phone,
-          otp,
-        }),
+        body: JSON.stringify({"phone": phone,"password": otp }),
       });
 
       if (!response.ok) {
@@ -56,9 +62,21 @@ export default function SignIn() {
       }
 
       const result = await response.json();
-      console.log('Success:', result); // Handle success response
+      localStorage.setItem('token', result.token);
+
+      setMessage('Login successful! Redirecting...'); // Success message
+      setMessageType('success');
+
+      // Navigate to the dashboard after successful login
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 1500);
     } catch (error) {
-      console.error('Error:', error); // Handle error response
+      setMessage('Failed to validate OTP. Please try again.'); // Error message
+      setMessageType('error');
+      console.error('Error:', error);
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
@@ -72,7 +90,7 @@ export default function SignIn() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </div>
-          <p className="text-gray-600">You'll receive a 4 digit code to verify next.</p>
+          <p className="text-gray-600">You'll receive a 4-digit code to verify next.</p>
         </div>
 
         {/* Phone Number Input */}
@@ -96,8 +114,9 @@ export default function SignIn() {
         <button
           className="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded mb-6"
           onClick={handleContinueClick}
+          disabled={loading}
         >
-          CONTINUE
+          {loading ? 'Generating OTP...' : 'CONTINUE'}
         </button>
 
         {/* OTP Input */}
@@ -108,7 +127,7 @@ export default function SignIn() {
               type="text"
               id="otp"
               className="block w-full text-black rounded-md sm:text-sm border-gray-300"
-              placeholder="Enter 6 digit OTP"
+              placeholder="Enter 6-digit OTP"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
             />
@@ -120,9 +139,21 @@ export default function SignIn() {
           <button
             className="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded"
             onClick={handleSubmit}
+            disabled={loading}
           >
-            SUBMIT
+            {loading ? 'Validating OTP...' : 'SUBMIT'}
           </button>
+        )}
+
+        {/* Display Message */}
+        {message && (
+          <div
+            className={`mt-4 p-3 rounded ${
+              messageType === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+            }`}
+          >
+            {message}
+          </div>
         )}
       </div>
     </div>
