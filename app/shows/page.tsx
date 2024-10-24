@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Phone, Clapperboard, WalletCards, ChevronRight, Home, User, Search } from 'lucide-react';
+import Link from 'next/link';
 
 interface Show {
   id: string;
@@ -29,19 +30,19 @@ export default function NewShows() {
             {
               id: '1',
               title: 'The Mystery Adventure',
-              image: '/api/placeholder/300/200',
+              image: './show/mys.jpeg',
               description: 'A thrilling journey into the unknown.',
             },
             {
               id: '2',
               title: 'Sci-Fi Explorers',
-              image: '/api/placeholder/300/200',
+              image: './show/sci.jpg',
               description: 'Explore distant galaxies and futuristic technology.',
             },
             {
               id: '3',
               title: 'Comedy Night Special',
-              image: '/api/placeholder/300/200',
+              image: './show/com.jpeg',
               description: 'A hilarious collection of stand-up comedy shows.',
             },
           ];
@@ -80,7 +81,7 @@ export default function NewShows() {
           </div>
           <div className="relative">
             <img 
-              src="/api/placeholder/40/40"
+              src="./images.png"
               alt="Profile"
               className="w-12 h-12 rounded-full border-2 border-white shadow-md"
             />
@@ -124,12 +125,12 @@ export default function NewShows() {
                   <div className="flex-1">
                     <h3 className="text-lg font-semibold text-gray-800">{show.title}</h3>
                     <p className="text-sm text-gray-500 mb-2">{show.description}</p>
-                    <button
+                    <Link href='https://www.youtube.com/watch?v=At8v_Yc044Y&pp=ygULdGhpY2sgb2YgaXQ%3D'
                       className="text-blue-500 text-sm font-medium"
-                      onClick={() => router.push(`/shows/${show.id}`)}
+                      // onClick={() => router.push(`/shows/${show.id}`)}
                     >
                       Watch Now
-                    </button>
+                    </Link>
                   </div>
                 </div>
               ))}

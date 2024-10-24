@@ -80,7 +80,7 @@ export default function ProfilePage() {
           </div>
           <div className="relative">
             <img 
-              src="/api/placeholder/40/40"
+              src="./images.png"
               alt="Profile"
               className="w-12 h-12 rounded-full border-2 border-white shadow-md"
             />

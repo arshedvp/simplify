@@ -33,6 +33,11 @@ export default function Home() {
           }
 
           const data = await response.json();
+
+          if (!data.name){
+            router.push('/signin');
+            throw new Error('Failed to fetch user data');
+          }
           const userData = {
             name: data.name,
             phoneNumber: data.phone,
